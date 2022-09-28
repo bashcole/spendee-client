@@ -38,6 +38,15 @@ const PositionForm = ({position, onSubmit, onDelete}: IProps) => {
     const isAddMode = !position?._id;
     const t = useTranslations("Wallet");
     const [startDate, setStartDate] = useState(findDate(position));
+    const {
+        control,
+        register,
+        handleSubmit,
+        setError,
+        formState: {errors, isValid, isDirty}
+    } = useForm<IFormInputs>({mode: "onChange"});
+
+    
     // const startDate = findDate(position)
     const {currencies} = useContext(WalletContext)
 
@@ -55,14 +64,6 @@ const PositionForm = ({position, onSubmit, onDelete}: IProps) => {
     const handleCategorySelect = () => {
         console.log("handleCategorySelect")
     }
-
-    const {
-        control,
-        register,
-        handleSubmit,
-        setError,
-        formState: {errors, isValid, isDirty}
-    } = useForm<IFormInputs>({mode: "onChange"});
 
     return (
         <StyledWrap>
