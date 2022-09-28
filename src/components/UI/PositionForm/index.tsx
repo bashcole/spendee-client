@@ -37,7 +37,7 @@ const PositionForm = ({position, onSubmit, onDelete}: IProps) => {
 
     const isAddMode = !position?._id;
     const t = useTranslations("Wallet");
-    const [startDate, setStartDate] = useState(findDate(transaction));
+    const [startDate, setStartDate] = useState(findDate(position));
     // const startDate = findDate(position)
     const {currencies} = useContext(WalletContext)
     const portfolioCurrencies = currencies?.filter(currency => currency.type !== 'fiat')
