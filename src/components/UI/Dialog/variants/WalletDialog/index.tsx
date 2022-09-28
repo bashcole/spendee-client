@@ -76,7 +76,7 @@ const Index = ({isShown, onClose, onSuccess}: Props) => {
     let mainCurrency = watch("currency");
     console.log(mainCurrency)
     if(!currencies){
-        return <>Bla</>
+        return <></>
     }
 
     return (
