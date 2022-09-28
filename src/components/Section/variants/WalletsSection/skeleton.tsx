@@ -6,7 +6,7 @@ import ActionsCard from "@components/Card/variants/ActionsCard";
 import CardList from "@components/CardList";
 
 const WalletsSectionSkeleton = () => {
-    return (<Section title={<Skeleton width="420px"/>}>
+    return (<Section title={<Skeleton width="120px"/>}>
         <CardList>
             <WalletCardSkeleton/>
             <WalletCardSkeleton/>
