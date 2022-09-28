@@ -46,7 +46,7 @@ const PositionForm = ({position, onSubmit, onDelete}: IProps) => {
         formState: {errors, isValid, isDirty}
     } = useForm<IFormInputs>({mode: "onChange"});
 
-    
+
     // const startDate = findDate(position)
     const {currencies} = useContext(WalletContext)
 

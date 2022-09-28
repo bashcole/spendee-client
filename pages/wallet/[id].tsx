@@ -25,6 +25,8 @@ import WalletContext from "@contexts/wallet";
 import {walletActions} from "@store/reducers/wallet-slice";
 import useFetchWalletPositions from "@hooks/useFetchWalletPositions";
 import useFetchCurrencies from "@hooks/useFetchCurrencies";
+import Section from "@components/Section";
+import Skeleton from "react-loading-skeleton";
 
 // noinspection JSUnusedGlobalSymbols
 export const getServerSideProps = async ({locale}: { locale: string }) => {
@@ -104,6 +106,11 @@ const Wallet: NextPage = (props: any) => {
                     }
                     {wallet?.type === 'portfolio' &&
                         <PortfolioActionsSection/>
+                    }
+
+                    {!wallet && <Section title={<Skeleton width="240px"/>}>
+                        <Skeleton height="420px"/>
+                    </Section>
                     }
 
                     <WalletFilterSection startDate={startDate} setStartDate={setStartDate} endDate={endDate}
