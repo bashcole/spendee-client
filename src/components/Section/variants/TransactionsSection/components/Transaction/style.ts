@@ -110,4 +110,7 @@ export const StyledCategorySmallIcon = styled(StyledCategoryIcon)`
 export const StyledCategoryName = styled.span`
   display: inline-block;
   margin-left: 0.5rem;
+  @media (max-width: 640px) {
+    display: none;
+  }
 `
