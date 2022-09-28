@@ -42,6 +42,9 @@ const PositionForm = ({position, onSubmit, onDelete}: IProps) => {
     const {currencies} = useContext(WalletContext)
     const portfolioCurrencies = currencies?.filter(currency => currency.type !== 'fiat')
 
+    if(!currencies){
+        return <></>
+    }
     const handleDelete = async () => {
         console.log('delete')
     }
