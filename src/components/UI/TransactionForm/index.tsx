@@ -32,8 +32,7 @@ const TransactionForm = ({transaction, onSubmit, onDelete}: IProps) => {
 
     const isAddMode = !transaction?._id;
     const t = useTranslations("Wallet");
-    // const [startDate, setStartDate] = useState(findDate(transaction));
-    const startDate = findDate(transaction)
+    const [startDate, setStartDate] = useState(findDate(transaction));
 
     const handleDelete = async () => {
         console.log('delete')
@@ -89,7 +88,10 @@ const TransactionForm = ({transaction, onSubmit, onDelete}: IProps) => {
                                 control={control}
                                 name="date"
                                 render={({ field: { onChange}}) => (
-                                    <DatePicker selected={startDate} onChange={(date: Date) => onChange(date)}/>
+                                    <DatePicker selected={startDate} onChange={(date: Date) =>  {
+                                        onChange(date)
+                                        setStartDate(date)
+                                    }}/>
                                 )}
                             />
                             {errors.date && <FormError>Please select a date</FormError>}

@@ -37,8 +37,8 @@ const PositionForm = ({position, onSubmit, onDelete}: IProps) => {
 
     const isAddMode = !position?._id;
     const t = useTranslations("Wallet");
-    // const [startDate, setStartDate] = useState(findDate(transaction));
-    const startDate = findDate(position)
+    const [startDate, setStartDate] = useState(findDate(transaction));
+    // const startDate = findDate(position)
     const {currencies} = useContext(WalletContext)
     const portfolioCurrencies = currencies?.filter(currency => currency.type !== 'fiat')
 
@@ -75,7 +75,10 @@ const PositionForm = ({position, onSubmit, onDelete}: IProps) => {
                                 control={control}
                                 name="date"
                                 render={({ field: { onChange}}) => (
-                                    <DatePicker selected={startDate} onChange={(date: Date) => onChange(date)}/>
+                                    <DatePicker selected={startDate} onChange={(date: Date) => {
+                                        onChange(date)
+                                        setStartDate(date)
+                                    }}/>
                                 )}
                             />
                             {errors.date && <FormError>Please select a date</FormError>}
