@@ -1,0 +1,30 @@
+[
+  {
+    "_id": "62e7b6dc7d3cc4612f77f14e",
+    "type": "fiat",
+    "ticker": "USD",
+    "name": "United States dollar",
+    "symbol": "$",
+    "symbolPosition": "left",
+    "rates": [
+      {
+        "ticker": "1INCH",
+        "value": 1.371964
+      }
+    ]
+  },
+  {
+    "_id": "62e7b6dc7d3cc4612f77f142",
+    "type": "fiat",
+    "ticker": "BGN",
+    "name": "Bulgarian lev",
+    "symbol": "lv",
+    "symbolPosition": "left",
+    "rates": [
+      {
+        "ticker": "1INCH",
+        "value": 1.371964
+      }
+    ]
+  }
+]
