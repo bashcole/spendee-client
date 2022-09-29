@@ -74,6 +74,10 @@ export const StyledCategoryColumn = styled.div`
   width: 150px;
   cursor: pointer;
   padding: 0.5rem;
+
+  @media (max-width: 640px) {
+    width: 50px;
+  }
 `
 
 export const StyledCategoryItem = styled(StyledCategoryColumn)`
@@ -107,10 +111,12 @@ export const StyledCategorySmallIcon = styled(StyledCategoryIcon)`
   padding: 0;
 `
 
-export const StyledCategoryName = styled.span`
+export const StyledCategoryName = styled.span<{ hideOnMobile?: boolean}>`
   display: inline-block;
   margin-left: 0.5rem;
-  @media (max-width: 640px) {
-    display: none;
-  }
+  ${({hideOnMobile}) => hideOnMobile && css`
+    @media (max-width: 640px) {
+      display: none;
+    }
+  `}
 `

@@ -28,13 +28,13 @@ const Transaction = ({transaction}: IProps) => {
         {isOpen && <TransactionDialog editMode={true} transaction={transaction} onClose={() => setIsOpen(false)}/>}
         {!isOpen && <StyledTransactionWrap>
             <StyledTransaction onClick={() => setIsOpen(true)}>
-                <StyledTransactionColumn width="200px">
+                <StyledTransactionColumn >
                     <StyledCategoryColumn>
                         <StyledCategoryIcon color={transaction.category.hex}>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src={transaction.category.icon} alt={"..."}/>
                         </StyledCategoryIcon>
-                        <StyledCategoryName>
+                        <StyledCategoryName hideOnMobile={true}>
                             {transaction.category.name}
                         </StyledCategoryName>
                     </StyledCategoryColumn>
