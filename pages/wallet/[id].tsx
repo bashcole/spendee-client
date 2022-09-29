@@ -109,7 +109,7 @@ const Wallet: NextPage = (props: any) => {
                     }
 
                     {!wallet && <Section title={<Skeleton width="240px"/>}>
-                        <Skeleton height="420px"/>
+                        <Skeleton height="40px"/>
                     </Section>
                     }
 
