@@ -1,3 +1,5 @@
+import withPWA from 'next-pwa'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
@@ -8,7 +10,12 @@ const nextConfig = {
   i18n: {
     locales: ['en', 'bg'],
     defaultLocale: 'en'
+  },
+  pwa: {
+    dest: "public",
+    register: true,
+    skipWaiting: true
   }
 }
 
-module.exports = nextConfig
+module.exports = withPWA(nextConfig)
