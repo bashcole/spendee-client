@@ -30,9 +30,13 @@ const Index = ({isShown, onClose, onSuccess}: Props) => {
                 if (devices && devices.length) {
 
                     let cameraId = devices[0].id;
-                    let extraConfig: IQRConfig = {
-                        fps: 10, // Optional frame per seconds for qr code scanning
-                        qrbox: 250 // Optional if you want bounded box UI
+                    let extraConfig = {
+                        aspectRatio: 1.7777778,
+                        experimentalFeatures: {
+                            useBarCodeDetectorIfSupported: true
+                        },
+                        fps: 20, // Optional frame per seconds for qr code scanning
+                        qrbox: 150 // Optional if you want bounded box UI
                     }
 
                     let config = {
