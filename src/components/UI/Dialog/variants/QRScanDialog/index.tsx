@@ -39,10 +39,7 @@ const Index = ({isShown, onClose, onSuccess}: Props) => {
                         facingMode: "user"
                     }
 
-                    // alert(`devices: ${devices.length}`)
                     if (devices.length > 1) {
-                        // cameraId = devices[1].id
-                        // If you want to prefer back camera
                         config = {...config, facingMode: "environment"};
                     }
 
@@ -53,7 +50,10 @@ const Index = ({isShown, onClose, onSuccess}: Props) => {
                         qrCodeMessage => {
 
                             let parts = qrCodeMessage.split("*");
-
+                            alert({
+                                date: parts[2],
+                                amount: parts[4]
+                            })
                             onSuccess({
                                 date: parts[2],
                                 amount: parts[4]
