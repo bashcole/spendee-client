@@ -3,7 +3,7 @@ const runtimeCaching = require('next-pwa/cache')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: false,
+    reactStrictMode: true,
     compiler: {
         // ssr and displayName are configured by default
         styledComponents: true
@@ -13,8 +13,11 @@ const nextConfig = {
         defaultLocale: 'en'
     },
     pwa: {
-        dest: "public",
-        runtimeCaching
+      dest: "public",
+      register: true,
+      skipWaiting: true,
+      runtimeCaching,
+      buildExcludes: [/middleware-manifest.json$/]
     }
 }
 
