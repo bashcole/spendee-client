@@ -13,6 +13,7 @@ import {createTransaction} from "@utils/index";
 import {IPosition} from "@interfaces/position";
 import Select from "react-select";
 import WalletContext from "@contexts/wallet";
+import {Spinner} from "@components/UI/LoadingScreen";
 
 interface IProps {
     position: IPosition | undefined;
@@ -35,6 +36,7 @@ const findDate = (position: IPosition | undefined) => {
 
 const PositionForm = ({position, onSubmit, onDelete}: IProps) => {
 
+    const [isDeleting, setIsDeleting] = useState(false)
     const isAddMode = !position?._id;
     const t = useTranslations("Wallet");
     const [startDate, setStartDate] = useState(findDate(position));
@@ -43,7 +45,7 @@ const PositionForm = ({position, onSubmit, onDelete}: IProps) => {
         register,
         handleSubmit,
         setError,
-        formState: {errors, isValid, isDirty}
+        formState: {errors, isValid, isDirty, isSubmitting}
     } = useForm<IFormInputs>({mode: "onChange"});
 
 
@@ -134,10 +136,10 @@ const PositionForm = ({position, onSubmit, onDelete}: IProps) => {
                 </StyledFields>
                 <StyledActions>
                     {!isAddMode &&
-                        <Button type="button" onClick={onDelete} variant="red" scaled={false}
-                                shadow={true}>{t("Delete")}</Button>}
-                    <Button type="submit" variant="green" scaled={false}
-                            shadow={true}>{isAddMode ? t('Add position') : t('Save')}</Button>
+                        <Button disabled={isDeleting} type="button" onClick={()=> {onDelete();setIsDeleting(true)}} variant="red" scaled={false}
+                                shadow={true}>{isDeleting && <Spinner type="button"/>} {t("Delete")}</Button>}
+                    <Button disabled={isSubmitting} type="submit" variant="green" scaled={false}
+                            shadow={true}>{isSubmitting && <Spinner type="button"/>} {isAddMode ? t('Add position') : t('Save')}</Button>
                 </StyledActions>
             </StyledForm>
         </StyledWrap>

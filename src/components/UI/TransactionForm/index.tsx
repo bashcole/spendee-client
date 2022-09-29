@@ -31,6 +31,7 @@ const findDate = (transaction: ITransaction | undefined) => {
 
 const TransactionForm = ({transaction, onSubmit, onDelete}: IProps) => {
 
+    const [isDeleting, setIsDeleting] = useState(false)
     const isAddMode = !transaction?._id;
     const t = useTranslations("Wallet");
     const [startDate, setStartDate] = useState(findDate(transaction));
@@ -120,10 +121,10 @@ const TransactionForm = ({transaction, onSubmit, onDelete}: IProps) => {
                 </StyledFields>
                 <StyledActions>
                     {!isAddMode &&
-                        <Button type="button" onClick={onDelete} variant="red" scaled={false}
-                                shadow={true}>{t("Delete")}</Button>}
+                        <Button disabled={isDeleting} type="button" onClick={()=> {onDelete();setIsDeleting(true)}} variant="red" scaled={false}
+                                shadow={true}>{isDeleting && <Spinner type="button"/>} {t("Delete")}</Button>}
                     <Button disabled={isSubmitting} type="submit" variant="green" scaled={false}
-                            shadow={true}> {isSubmitting && <Spinner type="button"/>} {isAddMode ? t('Add transaction') : t('Save')}</Button>
+                            shadow={true}>{isSubmitting && <Spinner type="button"/>} {isAddMode ? t('Add transaction') : t('Save')}</Button>
                 </StyledActions>
             </StyledForm>
         </StyledWrap>

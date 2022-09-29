@@ -10,6 +10,7 @@ import {StyledErrorBadge} from "@components/UI/Form/style";
 import {useTranslations} from "next-intl";
 import {validate} from "@babel/types";
 import WalletContext from "@contexts/wallet";
+import {Spinner} from "@components/UI/LoadingScreen";
 
 interface Props {
     isShown: boolean;
@@ -70,7 +71,7 @@ const Index = ({isShown, onClose, onSuccess}: Props) => {
         handleSubmit,
         reset,
         watch,
-        formState: {errors}
+        formState: {errors, isSubmitting}
     } = useForm<IFormInputs>({mode: "onChange"});
 
     let mainCurrency = watch("currency");
@@ -153,7 +154,7 @@ const Index = ({isShown, onClose, onSuccess}: Props) => {
                 </FormControl>
 
                 {/*@ts-ignore*/}
-                <Button variant="green" shadow={true} scaled={false} type="submit">{t("Save")}</Button>
+                <Button disabled={isSubmitting} variant="green" shadow={true} scaled={false} type="submit">{isSubmitting && <Spinner type="button"/>} {t("Save")}</Button>
             </form>
         </Dialog>
     )
