@@ -88,6 +88,7 @@ export const StyledCategoryColumn = styled.div`
 
   @media (max-width: 640px) {
     width: 50px;
+    margin-right: 0.5rem;
   }
 `
 
