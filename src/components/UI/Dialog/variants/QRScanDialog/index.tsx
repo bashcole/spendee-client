@@ -54,10 +54,7 @@ const Index = ({isShown, onClose, onSuccess}: Props) => {
                         qrCodeMessage => {
 
                             let parts = qrCodeMessage.split("*");
-                            alert({
-                                date: parts[2],
-                                amount: parts[4]
-                            })
+                            
                             onSuccess({
                                 date: parts[2],
                                 amount: parts[4]
