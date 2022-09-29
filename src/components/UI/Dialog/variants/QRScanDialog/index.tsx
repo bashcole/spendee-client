@@ -31,7 +31,6 @@ const Index = ({isShown, onClose, onSuccess}: Props) => {
 
                     let cameraId = devices[0].id;
                     let extraConfig = {
-                        aspectRatio: 1.7777778,
                         experimentalFeatures: {
                             useBarCodeDetectorIfSupported: true
                         },
@@ -54,7 +53,7 @@ const Index = ({isShown, onClose, onSuccess}: Props) => {
                         qrCodeMessage => {
 
                             let parts = qrCodeMessage.split("*");
-                            
+
                             onSuccess({
                                 date: parts[2],
                                 amount: parts[4]
