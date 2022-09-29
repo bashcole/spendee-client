@@ -29,7 +29,6 @@ const Index = ({isShown, onClose, onSuccess}: Props) => {
                  */
                 if (devices && devices.length) {
 
-                    let cameraId = devices[0].id;
                     let extraConfig = {
                         experimentalFeatures: {
                             useBarCodeDetectorIfSupported: true
