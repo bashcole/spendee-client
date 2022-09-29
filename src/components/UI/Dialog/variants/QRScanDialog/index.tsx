@@ -35,6 +35,7 @@ const Index = ({isShown, onClose, onSuccess}: Props) => {
                         qrbox: 250 // Optional if you want bounded box UI
                     }
 
+                    alert(`devices: ${devices.length}`)
                     if (devices.length > 1) {
                         // If you want to prefer back camera
                         extraConfig = {...extraConfig, facingMode: "environment"};
