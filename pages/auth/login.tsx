@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
 import {useRouter} from "next/router";
@@ -17,6 +17,7 @@ import {StyledHeadingTitle} from "@components/Card/variants/AuthCard/style";
 import {isValidEmail} from "@utils/validations";
 import {StyledErrorBadge} from "@components/UI/Form/style";
 import withGuest from "@components/HOC/withGuest";
+import {Spinner} from "@components/UI/LoadingScreen";
 
 // noinspection JSUnusedGlobalSymbols
 export const getServerSideProps = async ({locale}: { locale: string }) => {
@@ -50,7 +51,7 @@ const Login = () => {
         register,
         handleSubmit,
         setError,
-        formState: {errors, isValid, isDirty}
+        formState: {errors, isValid, isDirty, isSubmitting}
     } = useForm<IFormInputs>({mode: "onChange"});
     const onSubmit = async (data: IFormInputs) => {
 
@@ -95,7 +96,7 @@ const Login = () => {
                             {errors.password && <FormError data-testid="login-password-error">Please enter a password</FormError>}
                         </FormControl>
 
-                        <Button data-testid="login-submit" variant="green" shadow={true} scaled={false} disabled={!isDirty || !isValid}>Login
+                        <Button data-testid="login-submit" variant="green" shadow={true} scaled={false} disabled={!isDirty || !isValid || isSubmitting}>{isSubmitting && <Spinner type="button"/>} Login
                             to Spendee</Button>
                     </StyledForm>
 
