@@ -35,10 +35,11 @@ const Index = ({isShown, onClose, onSuccess}: Props) => {
                         qrbox: 250 // Optional if you want bounded box UI
                     }
 
-                    alert(`devices: ${devices.length}`)
+                    // alert(`devices: ${devices.length}`)
                     if (devices.length > 1) {
+                        cameraId = devices[1].id
                         // If you want to prefer back camera
-                        extraConfig = {...extraConfig, facingMode: "environment"};
+                        // extraConfig = {...extraConfig, facingMode: "environment"};
                     }
 
                     html5QrCode = new Html5Qrcode(/* element id */ qrcodeRegionId);
