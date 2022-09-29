@@ -9,6 +9,7 @@ import DatePicker from "react-datepicker";
 import SelectCategory from "@components/UI/SelectCategory";
 import {ITransactionCategory} from "@interfaces/category";
 import {createTransaction} from "@utils/index";
+import {Spinner} from "@components/UI/LoadingScreen";
 
 interface IProps {
     transaction: ITransaction | undefined;
@@ -50,7 +51,7 @@ const TransactionForm = ({transaction, onSubmit, onDelete}: IProps) => {
         register,
         handleSubmit,
         setError,
-        formState: {errors, isValid, isDirty}
+        formState: {errors, isValid, isDirty, isSubmitting}
     } = useForm<IFormInputs>({mode: "onChange"});
 
     // const onSubmitHandle = async (data: IFormInputs) => {
@@ -110,7 +111,7 @@ const TransactionForm = ({transaction, onSubmit, onDelete}: IProps) => {
                     <StyledColumn>
                         <FormControl>
                             <label>{t("Amount")}</label>
-                            <input autoComplete="off" defaultValue={transaction ? transaction.amount / 100: ''} id="amount" type="text"
+                            <input autoComplete="off" defaultValue={transaction ? transaction.amount / 100: ''} id="amount" type="number"
                                    placeholder="Your amount" {...register("amount", {required: true})} />
                             {errors.amount && <FormError>Please enter a valid amount</FormError>}
                         </FormControl>
@@ -121,8 +122,8 @@ const TransactionForm = ({transaction, onSubmit, onDelete}: IProps) => {
                     {!isAddMode &&
                         <Button type="button" onClick={onDelete} variant="red" scaled={false}
                                 shadow={true}>{t("Delete")}</Button>}
-                    <Button type="submit" variant="green" scaled={false}
-                            shadow={true}>{isAddMode ? t('Add transaction') : t('Save')}</Button>
+                    <Button disabled={isSubmitting} type="submit" variant="green" scaled={false}
+                            shadow={true}> {isSubmitting && <Spinner type="button"/>} {isAddMode ? t('Add transaction') : t('Save')}</Button>
                 </StyledActions>
             </StyledForm>
         </StyledWrap>

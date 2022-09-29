@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "styled-components"
+import styled, {css} from "styled-components"
 
 const Screen = styled.div`
   position: absolute;
@@ -17,7 +17,7 @@ const Screen = styled.div`
 `;
 
 const Logo = styled.svg``
-const Spinner = styled.span`
+export const Spinner = styled.span<{type?: string}>`
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -28,6 +28,13 @@ const Spinner = styled.span`
   margin-top: 1rem;
 
   animation: rotate 1.5s linear infinite;
+
+  ${({type}) => type === "button" && css`
+    border: 2px solid white;
+    border-top: 2px solid transparent;
+    margin: 0;
+    margin-right: 0.5rem;
+  `}
 
   @keyframes rotate {
     0% {
