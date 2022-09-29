@@ -29,7 +29,7 @@ const SelectCategory = ({onChange, defaultValue}: IProps) => {
     const {categories} = useContext(WalletContext)
     const t = useTranslations("Wallet");
     const [type, setType] = useState("expense")
-    const [showCategories, setShowCategories] = useState(true)
+    const [showCategories, setShowCategories] = useState(!defaultValue)
     const [selectedCategory, setSelectedCategory] = useState(defaultValue ? defaultValue : null)
 
     if(!categories){
