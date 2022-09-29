@@ -118,7 +118,7 @@ const PositionForm = ({position, onSubmit, onDelete}: IProps) => {
                     <StyledColumn>
                         <FormControl>
                             <label>{t("Units")}</label>
-                            <input defaultValue={position ? position.units: ''} id="units" type="number"
+                            <input defaultValue={position ? position.units: ''} id="units" step="any" type="number"
                                    placeholder={t("Your units")} {...register("units", {required: true})} />
                             {errors.units && <FormError>Please enter a valid units</FormError>}
                         </FormControl>
@@ -127,7 +127,7 @@ const PositionForm = ({position, onSubmit, onDelete}: IProps) => {
                     <StyledColumn>
                         <FormControl>
                             <label>{t("Open")}</label>
-                            <input defaultValue={position ? position.open: ''} id="open" type="number"
+                            <input defaultValue={position ? position.open: ''} id="open" step="any" type="number"
                                    placeholder={t("Your open")} {...register("open", {required: true})} />
                             {errors.open && <FormError>Please enter a valid open</FormError>}
                         </FormControl>

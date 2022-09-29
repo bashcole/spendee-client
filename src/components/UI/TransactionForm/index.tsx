@@ -112,7 +112,7 @@ const TransactionForm = ({transaction, onSubmit, onDelete}: IProps) => {
                     <StyledColumn>
                         <FormControl>
                             <label>{t("Amount")}</label>
-                            <input autoComplete="off" defaultValue={transaction ? transaction.amount / 100: ''} id="amount" type="number"
+                            <input autoComplete="off" defaultValue={transaction ? transaction.amount / 100: ''} id="amount" step="any" type="number"
                                    placeholder="Your amount" {...register("amount", {required: true})} />
                             {errors.amount && <FormError>Please enter a valid amount</FormError>}
                         </FormControl>
