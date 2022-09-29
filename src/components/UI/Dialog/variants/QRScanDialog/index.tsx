@@ -33,7 +33,7 @@ const Index = ({isShown, onClose, onSuccess}: Props) => {
                         experimentalFeatures: {
                             useBarCodeDetectorIfSupported: true
                         },
-                        fps: 20, // Optional frame per seconds for qr code scanning
+                        fps: 42, // Optional frame per seconds for qr code scanning
                         qrbox: 150 // Optional if you want bounded box UI
                     }
 
