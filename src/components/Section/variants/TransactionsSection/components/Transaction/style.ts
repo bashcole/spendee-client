@@ -23,6 +23,11 @@ export const StyledTransaction = styled.div`
   &:hover {
     background-color: #f4f6f8;
   }
+
+  @media (max-width: 640px) {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
 `
 
 export const StyledTransactionColumn = styled.div<{collapseOnMobile?: boolean, rightAlign?: boolean, width?: string, hideOnMobile?: boolean }>`
