@@ -23,8 +23,8 @@ export const Popout = styled.div`
   background-color: rgb(255, 255, 255);
   padding: 10px;
   top: 0;
-  width: 308px;
-  max-width: 308px;
+  width: 208px;
+  max-width: 208px;
   overflow-x: hidden;
 `
 
