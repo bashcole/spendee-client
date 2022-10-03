@@ -22,6 +22,16 @@ export async function getServerSideProps({locale}: { locale: string }) {
     };
 }
 
+// noinspection JSUnusedGlobalSymbols
+export async function getStaticProps({locale}: { locale: string }) {
+
+    return {
+        props: {
+            messages: await fetchTranslations(locale)
+        }
+    };
+}
+
 const Home = () => {
 
     const dispatch = useDispatch()
