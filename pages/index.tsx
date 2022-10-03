@@ -13,14 +13,14 @@ import {fetchTranslations} from "@services/translations";
 import useFetchCurrencies from "@hooks/useFetchCurrencies";
 
 // noinspection JSUnusedGlobalSymbols
-export async function getServerSideProps({locale}: { locale: string }) {
-
-    return {
-        props: {
-            messages: await fetchTranslations(locale)
-        }
-    };
-}
+// export async function getServerSideProps({locale}: { locale: string }) {
+//
+//     return {
+//         props: {
+//             messages: await fetchTranslations(locale)
+//         }
+//     };
+// }
 
 // noinspection JSUnusedGlobalSymbols
 export async function getStaticProps({locale}: { locale: string }) {
