@@ -52,6 +52,7 @@ const StyledGrid = styled.div`
   grid-auto-rows: 1fr;
   grid-auto-columns: 1fr;
   grid-template-columns: repeat( auto-fit, minmax(280px, 1fr) );
+  align-items: flex-start
 `
 
 const WalletOverview = () => {
@@ -117,7 +118,7 @@ interface ITable {
 
 export const Table = ({transactions, title, period}: ITable) => {
     return (
-        <div style={{minHeight: '200px', backgroundColor: 'white', borderRadius: '0.5rem'}}>
+        <div style={{minHeight: '0', backgroundColor: 'white', borderRadius: '0.5rem'}}>
             <div style={{padding: '1rem'}}>
                 <div>
                     <h1 style={{fontWeight: '600', fontSize: '16px'}}>{title}</h1>
@@ -162,9 +163,9 @@ const Row = ({item}: { item: any }) => {
                     {category.name}
                 </StyledCategoryName>
             </StyledCategoryColumn>
-            <StyledCategoryColumn>
+            <StyledTransactionColumn useFlex={true}>
                 {transactions.length} transaction{count > 1 && 's'}
-            </StyledCategoryColumn>
+            </StyledTransactionColumn>
             <StyledTransactionColumn useFlex={true}>
                 <StyledAmount
                     negative={category.type === "expense"}>{category.type === "income" && '+'}{formatNumber(total, router.locale, transaction.currency)}</StyledAmount>
