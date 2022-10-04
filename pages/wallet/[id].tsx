@@ -29,7 +29,7 @@ import Section from "@components/Section";
 import Skeleton from "react-loading-skeleton";
 
 // noinspection JSUnusedGlobalSymbols
-export const getStaticProps = async ({locale}: { locale: string }) => {
+export const getServerSideProps = async ({locale}: { locale: string }) => {
 
     return {
         props: {
@@ -37,10 +37,6 @@ export const getStaticProps = async ({locale}: { locale: string }) => {
             "title": "Edit wallet...",
         }
     }
-}
-
-export async function getStaticPaths() {
-    return {paths: [], fallback: false }
 }
 
 const Wallet: NextPage = (props: any) => {

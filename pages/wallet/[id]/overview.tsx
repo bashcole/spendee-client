@@ -24,7 +24,7 @@ import {
 } from "@components/Section/variants/TransactionsSection/components/Transaction/style";
 
 // noinspection JSUnusedGlobalSymbols
-export const getStaticProps = async ({locale}: { locale: string }) => {
+export const getServerSideProps = async ({locale}: { locale: string }) => {
 
     return {
         props: {
@@ -32,10 +32,6 @@ export const getStaticProps = async ({locale}: { locale: string }) => {
             "title": "Edit wallet",
         }
     }
-}
-
-export async function getStaticPaths() {
-    return {paths: [], fallback: false }
 }
 
 const WalletOverview = () => {

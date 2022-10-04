@@ -19,7 +19,7 @@ import {mutate} from "swr";
 import {walletSettingsNavigation} from "@constants/navigation";
 
 // noinspection JSUnusedGlobalSymbols
-export const getStaticProps = async ({locale}: { locale: string }) => {
+export const getServerSideProps = async ({locale}: { locale: string }) => {
 
     return {
         props: {
@@ -27,10 +27,6 @@ export const getStaticProps = async ({locale}: { locale: string }) => {
             "title": "Edit wallet...",
         }
     }
-}
-
-export async function getStaticPaths() {
-    return {paths: [], fallback: false }
 }
 
 interface IFormInputs {
