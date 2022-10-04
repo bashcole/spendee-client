@@ -46,7 +46,7 @@ const SelectCategory = ({onChange, defaultValue}: IProps) => {
     }
 
     const handleCategorySelect = (category: ITransactionCategory) => {
-        onChange({...category, id: category.id})
+        onChange({...category, id: category._id})
         setSelectedCategory(category)
         setShowCategories(false)
         setType('')
