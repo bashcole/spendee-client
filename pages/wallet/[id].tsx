@@ -39,6 +39,10 @@ export const getStaticProps = async ({locale}: { locale: string }) => {
     }
 }
 
+export async function getStaticPaths() {
+    return {paths: [], fallback: false }
+}
+
 const Wallet: NextPage = (props: any) => {
 
     const router = useRouter()
