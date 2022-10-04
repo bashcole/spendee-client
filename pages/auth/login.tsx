@@ -20,7 +20,7 @@ import withGuest from "@components/HOC/withGuest";
 import {Spinner} from "@components/UI/LoadingScreen";
 
 // noinspection JSUnusedGlobalSymbols
-export const getServerSideProps = async ({locale}: { locale: string }) => {
+export const getStaticSideProps = async ({locale}: { locale: string }) => {
 
     return {
         props: {

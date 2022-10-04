@@ -1,5 +1,5 @@
 export interface ITransactionCategory {
-    _id: string;
+    id: string;
     hex: string;
     icon: string;
     name: string;

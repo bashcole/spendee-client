@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {useDispatch} from "react-redux";
 
 import Seo from "@components/Seo";
@@ -11,20 +11,10 @@ import useFetchWallets from "@hooks/useFetchWallets";
 import {uiActions} from "@store/reducers/ui-slice";
 import {fetchTranslations} from "@services/translations";
 import useFetchCurrencies from "@hooks/useFetchCurrencies";
-
-// noinspection JSUnusedGlobalSymbols
-// export async function getServerSideProps({locale}: { locale: string }) {
-//
-//     return {
-//         props: {
-//             messages: await fetchTranslations(locale)
-//         }
-//     };
-// }
+import Head from "next/head";
 
 // noinspection JSUnusedGlobalSymbols
 export async function getStaticProps({locale}: { locale: string }) {
-
     return {
         props: {
             messages: await fetchTranslations(locale)
@@ -50,6 +40,8 @@ const Home = () => {
                 url: `/budgets`,
             },
         ]))
+
+        dispatch(uiActions.setIsLoading(false))
 
     }, [dispatch]);
 

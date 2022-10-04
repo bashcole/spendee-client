@@ -4,6 +4,7 @@ import {ITransaction} from "@interfaces/transaction";
 import {IPosition} from "@interfaces/position";
 import {ITransactionCategory} from "@interfaces/category";
 import {ICurrency} from "@interfaces/currency";
+import transaction from "@components/Section/variants/TransactionsSection/components/Transaction";
 
 export const formatNumber = (value: number, locale: string = 'en', currency: string = 'USD'): string => {
     return `${value.toLocaleString(locale === 'en' ? 'en-US' : 'bg-BG', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${currency}`
@@ -215,4 +216,36 @@ export const toQueryString = (object: Object | undefined) => {
 export const portfolioCurrencies = (currencies: ICurrency[] | undefined ) => {
     if(currencies === undefined) return []
     return currencies.filter(currency => currency.type !== 'fiat')
+}
+
+interface IQuery {
+    [key: string]: any | undefined
+}
+
+export const getDateParam = (query: IQuery, key: string, defaultValue: Date) => {
+    if (query.hasOwnProperty(key)) {
+        return new Date(query[key])
+    }
+    return defaultValue;
+}
+export const groupByCategory = (transactions: ITransaction[]) => {
+    // @ts-ignore
+    return transactions.reduce((acc, transaction) => {
+        const key = transaction.category.id
+        // console.log(transaction.category)
+
+        // @ts-ignore
+        if (!acc[key]) {
+            // @ts-ignore
+            acc[key] = {
+                'transactions': [],
+                'category': transaction.category
+            };
+        }
+
+        // @ts-ignore
+        acc[key]['transactions'].push(transaction);
+
+        return acc
+    }, {})
 }

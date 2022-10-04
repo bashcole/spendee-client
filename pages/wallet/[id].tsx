@@ -8,7 +8,7 @@ import Seo from "@components/Seo";
 import {uiActions} from "@store/reducers/ui-slice";
 import withAuth from "@components/HOC/withAuth";
 import {fetchTranslations} from "@services/translations";
-import {dateToYMDShort, portfolioCurrencies, toQueryString} from "@utils/index";
+import {dateToYMDShort, getDateParam, portfolioCurrencies, toQueryString} from "@utils/index";
 import {endOfMonth, startOfMonth} from "date-fns";
 import MotionWrap from "@components/UI/Motion";
 import PortfolioActionsSection from "@components/Section/variants/PortfolioActionsSection";
@@ -29,7 +29,7 @@ import Section from "@components/Section";
 import Skeleton from "react-loading-skeleton";
 
 // noinspection JSUnusedGlobalSymbols
-export const getServerSideProps = async ({locale}: { locale: string }) => {
+export const getStaticProps = async ({locale}: { locale: string }) => {
 
     return {
         props: {
@@ -37,17 +37,6 @@ export const getServerSideProps = async ({locale}: { locale: string }) => {
             "title": "Edit wallet...",
         }
     }
-}
-
-interface IQuery {
-    [key: string]: any | undefined
-}
-
-const getDateParam = (query: IQuery, key: string, defaultValue: Date) => {
-    if (query.hasOwnProperty(key)) {
-        return new Date(query[key])
-    }
-    return defaultValue;
 }
 
 const Wallet: NextPage = (props: any) => {

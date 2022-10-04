@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {useRouter} from "next/router";
 import {useTranslations} from "next-intl";
@@ -22,6 +22,8 @@ import {enUS as enLocale, bg as bgLocale} from 'react-date-range/dist/locale';
 // @ts-ignore
 import {defaultStaticRanges, defaultInputRanges, createStaticRanges} from "react-date-range/dist/defaultRanges";
 import {StyledIsDesktop, StyledIsMobile} from "@components/Section/variants/WalletFilterSection/style";
+import WalletContext from "@contexts/wallet";
+import Skeleton from "react-loading-skeleton";
 
 interface IProps {
     startDate: Date,
@@ -62,6 +64,7 @@ const extendedStaticRanges = [...cleanRanges, {
 // console.log(defaultStaticRanges)
 const WalletFilterSection = ({startDate, setStartDate, endDate, setEndDate}: IProps) => {
 
+    const {wallet} = useContext(WalletContext)
     const router = useRouter()
     const t = useTranslations("Wallet");
 
@@ -103,11 +106,12 @@ const WalletFilterSection = ({startDate, setStartDate, endDate, setEndDate}: IPr
             <div style={{position: "relative", marginBottom: "1rem", marginTop: "1rem"}}>
                 <div style={{display: "flex"}}>
                     <div style={{marginLeft: "auto"}}>
-                        <Button onClick={handleClick} shadow={false}>
+                        {wallet && <Button onClick={handleClick} shadow={false}>
                             {
                                 calendarYears > 100 ? t("All History") : `${dateFormat(startDate, router.locale)} - ${dateFormat(endDate, router.locale)}`
                             }
-                        </Button>
+                        </Button>}
+                        {!wallet && <Skeleton width='240px' height='29px'/>}
                     </div>
                 </div>
                 <div style={{position: "relative"}}>
