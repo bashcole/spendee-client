@@ -47,12 +47,11 @@ export const getServerSideProps = async ({locale}: { locale: string }) => {
 }
 
 const StyledGrid = styled.div`
-  display: grid;
+  display: flex;
   gap: 1rem;
-  grid-auto-rows: 1fr;
-  grid-auto-columns: 1fr;
-  grid-template-columns: repeat( auto-fit, minmax(280px, 1fr) );
-  align-items: flex-start
+  @media (max-width: 640px) {
+    flex-direction: column;
+  }
 `
 
 const WalletOverview = () => {
@@ -118,7 +117,7 @@ interface ITable {
 
 export const Table = ({transactions, title, period}: ITable) => {
     return (
-        <div style={{minHeight: '0', backgroundColor: 'white', borderRadius: '0.5rem'}}>
+        <div style={{minHeight: '0', backgroundColor: 'white', borderRadius: '0.5rem', flex: '1'}}>
             <div style={{padding: '1rem'}}>
                 <div>
                     <h1 style={{fontWeight: '600', fontSize: '16px'}}>{title}</h1>
