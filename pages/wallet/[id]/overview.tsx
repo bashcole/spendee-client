@@ -34,6 +34,10 @@ export const getStaticProps = async ({locale}: { locale: string }) => {
     }
 }
 
+export async function getStaticPaths() {
+    return {paths: [], fallback: false }
+}
+
 const WalletOverview = () => {
     const router = useRouter()
     const {id} = router.query
