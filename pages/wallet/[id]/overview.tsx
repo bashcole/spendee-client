@@ -31,6 +31,9 @@ import {
     StyledCategoryName, StyledTransactionColumn
 } from "@components/Section/variants/TransactionsSection/components/Transaction/style";
 import styled from "styled-components";
+import WalletFilterSection from "@components/Section/variants/WalletFilterSection";
+import WalletContext from "@contexts/wallet";
+import useFetchWallet from "@hooks/useFetchWallet";
 
 // noinspection JSUnusedGlobalSymbols
 export const getServerSideProps = async ({locale}: { locale: string }) => {
@@ -55,7 +58,7 @@ const WalletOverview = () => {
     const router = useRouter()
     const {id} = router.query
     const dispatch = useDispatch()
-
+    const {wallet} = useFetchWallet(id)
     const [startDate, setStartDate] = useState(getDateParam(router.query, 'from', startOfMonth(new Date())));
     const [endDate, setEndDate] = useState(getDateParam(router.query, 'to', endOfMonth(new Date())));
     const {transactions} = useFetchWalletTransactions(id, {
@@ -81,6 +84,10 @@ const WalletOverview = () => {
         const expenseTransactionsGrouped = groupByCategory(expenseTransactions)
 
         content = <>
+
+            <WalletFilterSection startDate={startDate} setStartDate={setStartDate} endDate={endDate}
+                                 setEndDate={setEndDate}/>
+
             <StyledGrid>
                 <Table title="Period Income" transactions={incomeTransactionsGrouped}/>
                 <Table title="Period Expenses" transactions={expenseTransactionsGrouped}/>
@@ -92,9 +99,11 @@ const WalletOverview = () => {
         <>
             <Seo title="Wallet Overview"/>
             <MotionWrap>
+                <WalletContext.Provider value={{wallet}}>
                 <Section title={"Overview"}>
                     {content}
                 </Section>
+                </WalletContext.Provider>
             </MotionWrap>
         </>
     )
@@ -108,7 +117,7 @@ interface ITable {
 
 export const Table = ({transactions, title, period}: ITable) => {
     return (
-        <div style={{height: '200px', backgroundColor: 'white', borderRadius: '0.5rem'}}>
+        <div style={{minHeight: '200px', backgroundColor: 'white', borderRadius: '0.5rem'}}>
             <div style={{padding: '1rem'}}>
                 <div>
                     <h1 style={{fontWeight: '600', fontSize: '16px'}}>{title}</h1>
