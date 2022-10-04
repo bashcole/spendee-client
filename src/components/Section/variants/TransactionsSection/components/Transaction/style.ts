@@ -30,11 +30,17 @@ export const StyledTransaction = styled.div`
   }
 `
 
-export const StyledTransactionColumn = styled.div<{collapseOnMobile?: boolean, rightAlign?: boolean, width?: string, hideOnMobile?: boolean }>`
+export const StyledTransactionColumn = styled.div<{useFlex?: boolean, collapseOnMobile?: boolean, rightAlign?: boolean, width?: string, hideOnMobile?: boolean }>`
   flex: 1;
 
   ${({rightAlign}) => rightAlign && css`
     text-align: right;
+  `}
+  
+  ${({useFlex}) => useFlex && css`
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
   `}
 
   ${({collapseOnMobile}) => collapseOnMobile && css`

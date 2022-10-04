@@ -11,17 +11,26 @@ import {fetchTranslations} from "@services/translations";
 import MotionWrap from "@components/UI/Motion";
 import {walletOverviewNavigation} from "@constants/navigation";
 import {endOfMonth, startOfMonth} from "date-fns";
-import {dateToYMDShort, getDateParam, groupByCategory} from "@utils/index";
+import {
+    dateToYMDShort,
+    formatNumber,
+    getDateParam,
+    groupByCategory,
+    sumOtherTransactions,
+    sumTransactions
+} from "@utils/index";
 import useFetchWalletTransactions from "@hooks/useFetchWalletTransactions";
 import Skeleton from "react-loading-skeleton";
 import withAuth from "@components/HOC/withAuth";
 import {log} from "util";
 import Section from "@components/Section";
 import {
+    StyledAmount,
     StyledCategoryColumn,
     StyledCategoryIcon,
-    StyledCategoryName
+    StyledCategoryName, StyledTransactionColumn
 } from "@components/Section/variants/TransactionsSection/components/Transaction/style";
+import styled from "styled-components";
 
 // noinspection JSUnusedGlobalSymbols
 export const getServerSideProps = async ({locale}: { locale: string }) => {
@@ -29,10 +38,18 @@ export const getServerSideProps = async ({locale}: { locale: string }) => {
     return {
         props: {
             messages: await fetchTranslations(locale),
-            "title": "Edit wallet",
+            "title": "Wallet overview",
         }
     }
 }
+
+const StyledGrid = styled.div`
+  display: grid;
+  gap: 1rem;
+  grid-auto-rows: 1fr;
+  grid-auto-columns: 1fr;
+  grid-template-columns: repeat( auto-fit, minmax(280px, 1fr) );
+`
 
 const WalletOverview = () => {
     const router = useRouter()
@@ -64,14 +81,10 @@ const WalletOverview = () => {
         const expenseTransactionsGrouped = groupByCategory(expenseTransactions)
 
         content = <>
-            <div style={{
-                display: 'grid',
-                gap: '1rem',
-                gridTemplateColumns: '1fr 1fr'
-            }}>
+            <StyledGrid>
                 <Table title="Period Income" transactions={incomeTransactionsGrouped}/>
                 <Table title="Period Expenses" transactions={expenseTransactionsGrouped}/>
-            </div>
+            </StyledGrid>
         </>
     }
 
@@ -101,7 +114,7 @@ export const Table = ({transactions, title, period}: ITable) => {
                     <h1 style={{fontWeight: '600', fontSize: '16px'}}>{title}</h1>
                     <span style={{color: '#bbcdd8', fontSize: '12px'}}>Jan 01–Dec 31</span>
                 </div>
-                <div>
+                <div style={{paddingTop: '1rem'}}>
                     {transactions &&
                         Object.keys(transactions).map(item => <Row
                             key={transactions[item].category?.id} item={transactions[item]}/>)
@@ -115,9 +128,19 @@ export const Table = ({transactions, title, period}: ITable) => {
 }
 
 const Row = ({item}: { item: any }) => {
+
+    const router = useRouter()
+
     const transactions = item.transactions
     const count = transactions.length
     const category = item.category
+
+    const total = sumTransactions(transactions)
+    const transaction = transactions[0]
+    let otherTotal = 0
+    if(transaction.otherCurrency){
+        otherTotal = sumOtherTransactions(transactions)
+    }
 
     return (
         <div style={{display: 'flex'}}>
@@ -131,8 +154,16 @@ const Row = ({item}: { item: any }) => {
                 </StyledCategoryName>
             </StyledCategoryColumn>
             <StyledCategoryColumn>
-                # {transactions.length} transaction{count > 1 && 's'}
+                {transactions.length} transaction{count > 1 && 's'}
             </StyledCategoryColumn>
+            <StyledTransactionColumn useFlex={true}>
+                <StyledAmount
+                    negative={category.type === "expense"}>{category.type === "income" && '+'}{formatNumber(total, router.locale, transaction.currency)}</StyledAmount>
+                {transaction.otherCurrency &&
+                    <StyledAmount
+                        other={true}>{category.type === "income" && '+'}{formatNumber(otherTotal, router.locale, transaction.otherCurrency.currency)}</StyledAmount>}
+
+            </StyledTransactionColumn>
         </div>
     )
 }

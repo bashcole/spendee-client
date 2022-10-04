@@ -46,7 +46,7 @@ const Transaction = ({transaction}: IProps) => {
                 <StyledTransactionColumn hideOnMobile={true}>
                     {transaction.note}
                 </StyledTransactionColumn>
-                <StyledTransactionColumn rightAlign={true} width="200px">
+                <StyledTransactionColumn rightAlign={true} width="250px" useFlex={true}>
                     <StyledAmount
                         negative={transaction.category.type === "expense"}>{transaction.category.type === "expense" ? '-' : '+'}{formatNumber(transaction.amount / 100, router.locale, transaction.currency)}</StyledAmount>
                     {transaction.otherCurrency &&
