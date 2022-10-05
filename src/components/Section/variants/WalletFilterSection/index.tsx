@@ -39,8 +39,6 @@ const cleanRanges = defaultStaticRanges.map((item: any) => {
     }
 })
 
-console.log(cleanRanges)
-
 const extendedStaticRanges = [...cleanRanges, {
     label: 'This Year',
     range: () => ({
