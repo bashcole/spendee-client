@@ -232,7 +232,6 @@ export const groupByCategory = (transactions: ITransaction[]) => {
     // @ts-ignore
     return transactions.reduce((acc, transaction) => {
         const key = transaction.category.id
-        // console.log(transaction.category)
 
         // @ts-ignore
         if (!acc[key]) {
@@ -248,4 +247,29 @@ export const groupByCategory = (transactions: ITransaction[]) => {
 
         return acc
     }, {})
+}
+
+export const groupByPeriod = (transactions: ITransaction[], period) => {
+    // @ts-ignore
+    return transactions.reduce((acc, transaction) => {
+        const key = period(transaction)
+        console.log(`The key is ${key}`)
+
+        // @ts-ignore
+        if (!acc[key]) {
+            // @ts-ignore
+            acc[key] = {
+                'transactions': []
+            };
+        }
+
+        // @ts-ignore
+        acc[key]['transactions'].push(transaction);
+
+        return acc
+    }, {})
+}
+
+export const filterByType = (transactions, type) => {
+    return transactions.filter(transaction => transaction.category.type === type)
 }

@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {useRouter} from 'next/router'
-
-import {motion} from "framer-motion";
-import {variants} from "@constants/motion-variants";
 import Seo from "@components/Seo";
 
 import {useDispatch} from "react-redux";
@@ -12,7 +9,7 @@ import MotionWrap from "@components/UI/Motion";
 import {walletOverviewNavigation} from "@constants/navigation";
 import {endOfMonth, startOfMonth} from "date-fns";
 import {
-    dateToYMDShort,
+    dateToYMDShort, filterByType,
     formatNumber,
     getDateParam,
     groupByCategory,
@@ -22,7 +19,6 @@ import {
 import useFetchWalletTransactions from "@hooks/useFetchWalletTransactions";
 import Skeleton from "react-loading-skeleton";
 import withAuth from "@components/HOC/withAuth";
-import {log} from "util";
 import Section from "@components/Section";
 import {
     StyledAmount,
@@ -34,6 +30,87 @@ import styled from "styled-components";
 import WalletFilterSection from "@components/Section/variants/WalletFilterSection";
 import WalletContext from "@contexts/wallet";
 import useFetchWallet from "@hooks/useFetchWallet";
+
+import {
+    BarChart,
+    Bar,
+    LineChart,
+    Line,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    Legend,
+    PieChart,
+    ResponsiveContainer,
+    Pie, Cell
+} from 'recharts';
+import PeriodPie from "@components/UI/Charts/variants/PeriodPie";
+import ChangeBar from "@components/UI/Charts/variants/ChangeBar";
+
+const chartData = [
+    {
+        "name": "Page A",
+        "uv": 4000,
+        "pv": 2400,
+        "amt": 2400
+    },
+    {
+        "name": "Page B",
+        "uv": 3000,
+        "pv": 1398,
+        "amt": 2210
+    },
+    {
+        "name": "Page C",
+        "uv": 2000,
+        "pv": 9800,
+        "amt": 2290
+    },
+    {
+        "name": "Page D",
+        "uv": 2780,
+        "pv": 3908,
+        "amt": 2000
+    },
+    {
+        "name": "Page E",
+        "uv": 1890,
+        "pv": 4800,
+        "amt": 2181
+    },
+    {
+        "name": "Page F",
+        "uv": 2390,
+        "pv": 3800,
+        "amt": 2500
+    },
+    {
+        "name": "Page G",
+        "uv": 3490,
+        "pv": 4300,
+        "amt": 2100
+    }
+];
+
+const data01 = [
+    {name: 'Group A', value: 400},
+    {name: 'Group B', value: 300},
+    {name: 'Group C', value: 300},
+    {name: 'Group D', value: 200},
+    {name: 'Group E', value: 278},
+    {name: 'Group F', value: 189},
+];
+
+const data02 = [
+    {name: 'Group A', value: 2400},
+    {name: 'Group B', value: 4567},
+    {name: 'Group C', value: 1398},
+    {name: 'Group D', value: 9800},
+    {name: 'Group E', value: 3908},
+    {name: 'Group F', value: 4800},
+];
+
 
 // noinspection JSUnusedGlobalSymbols
 export const getServerSideProps = async ({locale}: { locale: string }) => {
@@ -47,10 +124,18 @@ export const getServerSideProps = async ({locale}: { locale: string }) => {
 }
 
 const StyledGrid = styled.div`
-  display: flex;
+  //display: flex;
+  //gap: 1rem;
+  //@media (max-width: 640px) {
+  //  flex-direction: column;
+  //}
+  display: grid;
   gap: 1rem;
+  //grid-auto-rows: 10px;
+  grid-auto-columns: 1fr;
+  grid-template-columns: repeat(2, 1fr);
   @media (max-width: 640px) {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 `
 
@@ -76,8 +161,8 @@ const WalletOverview = () => {
 
     if (transactions) {
 
-        const incomeTransactions = transactions.filter(transaction => transaction.category.type === 'income')
-        const expenseTransactions = transactions.filter(transaction => transaction.category.type === 'expense')
+        const incomeTransactions = filterByType(transactions,'income')
+        const expenseTransactions = filterByType(transactions, 'expense')
 
         // @ts-ignore
         const incomeTransactionsGrouped = groupByCategory(incomeTransactions)
@@ -89,8 +174,15 @@ const WalletOverview = () => {
                                  setEndDate={setEndDate}/>
 
             <StyledGrid>
-                <Table title="Period Income" transactions={incomeTransactionsGrouped}/>
+                <Card title="Changes">
+                    <div style={{height: '300px', width: '100%', display: "flex", justifyContent: 'center'}}>
+                        <ChangeBar wallet={wallet} transactions={transactions} startDate={startDate} endDate={endDate}/>
+                    </div>
+                </Card>
+
                 <Table title="Period Expenses" transactions={expenseTransactionsGrouped}/>
+                <Table title="Period Income" transactions={incomeTransactionsGrouped}/>
+
             </StyledGrid>
         </>
     }
@@ -100,9 +192,9 @@ const WalletOverview = () => {
             <Seo title="Wallet Overview"/>
             <MotionWrap>
                 <WalletContext.Provider value={{wallet}}>
-                <Section title={"Overview"}>
-                    {content}
-                </Section>
+                    <Section title={"Overview"}>
+                        {content}
+                    </Section>
                 </WalletContext.Provider>
             </MotionWrap>
         </>
@@ -115,24 +207,47 @@ interface ITable {
     period?: string;
 }
 
-export const Table = ({transactions, title, period}: ITable) => {
+export const Card = (props: any) => {
     return (
-        <div style={{minHeight: '0', backgroundColor: 'white', borderRadius: '0.5rem', flex: '1'}}>
+        <div style={{minHeight: '0', backgroundColor: 'white', borderRadius: '0.5rem', flex: '1 1 50%'}}>
             <div style={{padding: '1rem'}}>
                 <div>
-                    <h1 style={{fontWeight: '600', fontSize: '16px'}}>{title}</h1>
-                    <span style={{color: '#bbcdd8', fontSize: '12px'}}>Jan 01–Dec 31</span>
+                    <h1 style={{fontWeight: '600', fontSize: '16px'}}>{props.title}</h1>
                 </div>
                 <div style={{paddingTop: '1rem'}}>
-                    {transactions &&
-                        Object.keys(transactions).map(item => <Row
-                            key={transactions[item].category?.id} item={transactions[item]}/>)
-                    }
-
+                    {props.children}
                 </div>
 
             </div>
         </div>
+    )
+}
+
+export const Table = ({transactions, title}: ITable) => {
+
+    const tempTransactions = Object.keys(transactions).map((item) => {
+        return {
+            "category": transactions[item].category,
+            "transactions": transactions[item].transactions,
+            "total": sumTransactions(transactions[item].transactions)
+        }
+    })
+
+    const orderTransactions = tempTransactions.sort((a, b) => a.total - b.total)
+
+    return (
+        <Card title={title}>
+            <div style={{paddingTop: '1rem'}}>
+                <div style={{height: '300px', width: '100%', display: "flex", justifyContent: 'center'}}>
+                    <PeriodPie transactions={transactions}/>
+                </div>
+            </div>
+
+            {transactions &&
+                orderTransactions.map(item => <Row
+                    key={item.category?.id} item={item}/>)
+            }
+        </Card>
     )
 }
 
@@ -147,7 +262,7 @@ const Row = ({item}: { item: any }) => {
     const total = sumTransactions(transactions)
     const transaction = transactions[0]
     let otherTotal = 0
-    if(transaction.otherCurrency){
+    if (transaction.otherCurrency) {
         otherTotal = sumOtherTransactions(transactions)
     }
 

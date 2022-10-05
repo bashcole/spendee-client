@@ -75,6 +75,7 @@ export const StyledTransactionDateColumn = styled.div<{ rightAlign?: boolean, wi
 export const StyledAmount = styled.span<{ negative?: boolean, other?: boolean }>`
   display: block;
   color: #34d399;
+  text-align: right;
   ${props => props.negative && css`
     color: #F87171;
   `}
