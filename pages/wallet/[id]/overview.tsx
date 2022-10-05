@@ -200,7 +200,6 @@ const Row = ({item}: { item: any }) => {
                 {transaction.otherCurrency &&
                     <StyledAmount
                         other={true}>{category.type === "income" && '+'}{formatNumber(otherTotal, router.locale, transaction.otherCurrency.currency)}</StyledAmount>}
-
             </StyledTransactionColumn>
         </div>
     )
