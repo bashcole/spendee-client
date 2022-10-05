@@ -249,6 +249,7 @@ export const groupByCategory = (transactions: ITransaction[]) => {
     }, {})
 }
 
+// @ts-ignore
 export const groupByPeriod = (transactions: ITransaction[], period) => {
     // @ts-ignore
     return transactions.reduce((acc, transaction) => {
@@ -270,6 +271,8 @@ export const groupByPeriod = (transactions: ITransaction[], period) => {
     }, {})
 }
 
+// @ts-ignore
 export const filterByType = (transactions, type) => {
+    // @ts-ignore
     return transactions.filter(transaction => transaction.category.type === type)
 }
