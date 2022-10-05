@@ -31,86 +31,8 @@ import WalletFilterSection from "@components/Section/variants/WalletFilterSectio
 import WalletContext from "@contexts/wallet";
 import useFetchWallet from "@hooks/useFetchWallet";
 
-import {
-    BarChart,
-    Bar,
-    LineChart,
-    Line,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-    PieChart,
-    ResponsiveContainer,
-    Pie, Cell
-} from 'recharts';
 import PeriodPie from "@components/UI/Charts/variants/PeriodPie";
 import ChangeBar from "@components/UI/Charts/variants/ChangeBar";
-
-const chartData = [
-    {
-        "name": "Page A",
-        "uv": 4000,
-        "pv": 2400,
-        "amt": 2400
-    },
-    {
-        "name": "Page B",
-        "uv": 3000,
-        "pv": 1398,
-        "amt": 2210
-    },
-    {
-        "name": "Page C",
-        "uv": 2000,
-        "pv": 9800,
-        "amt": 2290
-    },
-    {
-        "name": "Page D",
-        "uv": 2780,
-        "pv": 3908,
-        "amt": 2000
-    },
-    {
-        "name": "Page E",
-        "uv": 1890,
-        "pv": 4800,
-        "amt": 2181
-    },
-    {
-        "name": "Page F",
-        "uv": 2390,
-        "pv": 3800,
-        "amt": 2500
-    },
-    {
-        "name": "Page G",
-        "uv": 3490,
-        "pv": 4300,
-        "amt": 2100
-    }
-];
-
-const data01 = [
-    {name: 'Group A', value: 400},
-    {name: 'Group B', value: 300},
-    {name: 'Group C', value: 300},
-    {name: 'Group D', value: 200},
-    {name: 'Group E', value: 278},
-    {name: 'Group F', value: 189},
-];
-
-const data02 = [
-    {name: 'Group A', value: 2400},
-    {name: 'Group B', value: 4567},
-    {name: 'Group C', value: 1398},
-    {name: 'Group D', value: 9800},
-    {name: 'Group E', value: 3908},
-    {name: 'Group F', value: 4800},
-];
-
 
 // noinspection JSUnusedGlobalSymbols
 export const getServerSideProps = async ({locale}: { locale: string }) => {
@@ -124,14 +46,8 @@ export const getServerSideProps = async ({locale}: { locale: string }) => {
 }
 
 const StyledGrid = styled.div`
-  //display: flex;
-  //gap: 1rem;
-  //@media (max-width: 640px) {
-  //  flex-direction: column;
-  //}
   display: grid;
   gap: 1rem;
-  //grid-auto-rows: 10px;
   grid-auto-columns: 1fr;
   grid-template-columns: repeat(2, 1fr);
   @media (max-width: 640px) {
@@ -152,8 +68,6 @@ const WalletOverview = () => {
     })
 
     useEffect(() => {
-        console.log(`ID: ${id}`)
-        console.log(walletOverviewNavigation(`${id}`))
         dispatch(uiActions.setNavItems(walletOverviewNavigation(`${id}`)))
     }, [dispatch, id])
 
@@ -161,7 +75,7 @@ const WalletOverview = () => {
 
     if (transactions) {
 
-        const incomeTransactions = filterByType(transactions,'income')
+        const incomeTransactions = filterByType(transactions, 'income')
         const expenseTransactions = filterByType(transactions, 'expense')
 
         // @ts-ignore
