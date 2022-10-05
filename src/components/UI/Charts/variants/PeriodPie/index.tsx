@@ -1,12 +1,11 @@
 import React from 'react';
 import {Cell, Pie, PieChart, ResponsiveContainer} from "recharts";
-import {COLORS, sumTransactions} from "@utils/index";
+import {sumTransactions} from "@utils/index";
 
 const RADIAN = Math.PI / 180;
 
-const renderCustomizedLabel = ({
-                                   cx, cy, midAngle, innerRadius, outerRadius, percent, index, fill, name, value
-                               }) => {
+// @ts-ignore
+const renderCustomizedLabel = ({cx, cy, midAngle, innerRadius, outerRadius, percent, index, fill, name, value}) => {
 
     if(value < 4){
         return null
@@ -49,6 +48,7 @@ const renderCustomizedLabel = ({
     );
 };
 
+// @ts-ignore
 const PeriodPie = ({transactions}) => {
 
     const colors = Object.keys(transactions).map((item) => {

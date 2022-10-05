@@ -3,6 +3,7 @@ import {Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis, ResponsiveContainer
 import {filterByType, formatNumber, groupByPeriod, sumTransactions} from "@utils/index";
 import {differenceInDays, format, startOfDay} from "date-fns";
 
+// @ts-ignore
 const CustomTooltip = ({ active, payload, label, currecy }) => {
     if (active && payload && payload.length) {
         return (
@@ -17,27 +18,31 @@ const CustomTooltip = ({ active, payload, label, currecy }) => {
     return null;
 };
 
+// @ts-ignore
 const ChangeBar = ({wallet, transactions, startDate, endDate}) => {
 
     const diff = differenceInDays(startDate, endDate)
     const dateFormat = diff > 32 ? 'LLL dd, yyyy' : 'LLL, yyyy'
 
+    // @ts-ignore
     const _temp = groupByPeriod(transactions.sort((a ,b) => new Date(a.createdAt) - new Date(b.createdAt)), (transaction) => {
         return format(new Date(transaction.createdAt), dateFormat)
     })
     const data = Object.keys(_temp).map((item) => {
         return {
             "name": item,
+            // @ts-ignore
             "income": sumTransactions(filterByType(_temp[item].transactions, 'income')),
+            // @ts-ignore
             "expense": sumTransactions(filterByType(_temp[item].transactions, 'expense')) * -1
         }
     })
-
     return (<ResponsiveContainer width="100%" height="100%">
         <BarChart width={730} height={250} data={data}>
             <CartesianGrid strokeDasharray="1"  vertical={false} />
             <XAxis dataKey="name" />
             <YAxis />
+            {/* @ts-ignore */}
             <Tooltip content={<CustomTooltip currecy={wallet?.currency}/>}/>
             <Bar dataKey="income" fill="#2dba75" barSize={4} />
             <Bar dataKey="expense" fill="#f14c52" barSize={4} />
