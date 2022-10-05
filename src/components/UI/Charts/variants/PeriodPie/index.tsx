@@ -24,9 +24,6 @@ const renderCustomizedLabel = ({cx, cy, midAngle, innerRadius, outerRadius, perc
     const line_y = cy + (radius + 10) * sin;
 
     const tx = cx + (radius + 60) * cos;
-    const ty = cy + (radius + 60) * sin;
-
-    const ex = tx + (cos >= 0 ? 1 : -1) * 22;
 
     return (
         <g style={{opacity: 1}}>
