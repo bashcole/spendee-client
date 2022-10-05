@@ -75,6 +75,7 @@ const WalletOverview = () => {
 
     if (transactions) {
 
+        // @ts-ignore
         const incomeTransactions = filterByType(transactions, 'income')
         const expenseTransactions = filterByType(transactions, 'expense')
 
