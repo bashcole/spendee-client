@@ -56,15 +56,20 @@ const StyledAmount = styled.span<{ negative?: boolean, other?: boolean }>`
   `}
 `
 
-export const StyledTransactionEdit = styled.div<{editMode?: boolean}>`
+export const StyledTransactionEdit = styled.div<{ editMode?: boolean }>`
   background-color: #f4f7fa;
   margin-bottom: 2rem;
 
   ${({editMode}) => editMode && css`
     border-top: 1rem solid #f4f7fa;
     border-bottom: 1rem solid #f4f7fa;
-  `}
-  
+  `};
+
+  @media (max-width: 640px) {
+    border: none;
+    margin: 0;
+  }
+
 `
 
 export const slideDown = keyframes`
@@ -83,6 +88,16 @@ export const StyledTransactionEditDialog = styled.div`
   position: relative;
   z-index: 5000;
   animation: ${slideDown} 0.2s linear forwards;
+
+  @media (max-width: 640px) {
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    padding: 20px;
+    transform: translate(-50%, 0);
+    animation: none;
+  }
+  
 `
 
 export const StyledTransactionEditDialogClose = styled.span`
@@ -111,4 +126,4 @@ export const StyledTransactionEditDialogContent = styled.div`
 export const StyledTransactionEditDialogCloseIcon = styled.svg`
   height: 20px;
   width: 20px;
-  `
+`
