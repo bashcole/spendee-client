@@ -91,10 +91,10 @@ export const StyledTransactionEditDialog = styled.div`
 
   @media (max-width: 640px) {
     position: fixed;
-    top: 25%;
+    top: 50%;
     left: 50%;
     padding: 20px;
-    transform: translate(-50%, 0);
+    transform: translate(-50%, -50%);
     animation: none;
   }
   
