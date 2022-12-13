@@ -1,3 +1,7 @@
+# Manage all your money with ease from one place with Spendee. Track your income and expenses, analyze your financial habits and stick to your budgets.
+
+# Tech stack: NextJs, StyledComponents, CypressJs
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
